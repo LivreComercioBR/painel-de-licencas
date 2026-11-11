@@ -13,7 +13,7 @@ O repositório deve ser clonado em uma pasta separada, fora do document root e d
 1. Faça uma cópia dos arquivos que estão atualmente em `/home1/rona7916/licencas.rmcsites.com.br/`.
 2. No cPanel, abra **Git Version Control** e clone o repositório privado `git@github.com:LivreComercioBR/painel-de-licencas.git` para uma pasta fora do document root.
 3. Se o clone pedir autenticação, autorize uma chave SSH do servidor cPanel no repositório GitHub com acesso de leitura. Não coloque senha, chave privada ou configuração do banco no GitHub.
-4. Na área de gerenciamento do repositório, abra **Pull or Deploy** e use **Update from Remote** para buscar `main).
+4. Na área de gerenciamento do repositório, abra **Pull or Deploy** e use **Update from Remote** para buscar `main`.
 5. Confira que o commit contém `.cpanel.yml`; então use **Deploy HEAD Commit**. Isso executa as cópias declaradas no arquivo para o document root configurado.
 
 A sincronização de Git e a publicação são ações distintas. Um commit no GitHub, sozinho, não atualiza o site.
