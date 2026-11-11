@@ -1,0 +1,15 @@
+# Configurações e chaves privadas
+/private/license-config.php
+/private/keys/
+*.pem
+*.key
+
+# Arquivos locais
+.env
+.DS_Store
+Thumbs.db
+
+# Logs e backups
+*.log
+*.sql.gz
+/backups/
