@@ -75,6 +75,7 @@ try {
     $provider = trim((string) ($subscription['provider'] ?? ''));
     $paymentStatus = trim((string) ($subscription['payment_status'] ?? ''));
     $paymentReference = trim((string) ($subscription['last_payment_reference'] ?? ''));
+    $paymentAmount = filter_var($subscription['last_payment_amount'] ?? null, FILTER_VALIDATE_FLOAT);
     $currency = strtoupper(trim((string) ($subscription['currency'] ?? 'BRL')));
     $initialAmount = filter_var($subscription['initial_amount'] ?? 0, FILTER_VALIDATE_FLOAT);
     $renewalAmount = filter_var($subscription['renewal_amount'] ?? 0, FILTER_VALIDATE_FLOAT);
@@ -93,7 +94,8 @@ try {
         || !in_array($status, $allowedStatuses, true)
         || !preg_match('/^[a-z0-9_-]{1,40}$/i', $provider)
         || !preg_match('/^[A-Z]{3}$/', $currency)
-        || $initialAmount === false || $renewalAmount === false || $initialAmount < 0 || $renewalAmount < 0) {
+        || $initialAmount === false || $renewalAmount === false || $initialAmount < 0 || $renewalAmount < 0
+        || ($paymentReference !== '' && ($paymentAmount === false || $paymentAmount < 0))) {
         apiResponse(422, ['error' => 'invalid_subscription_fields']);
     }
     if (in_array($status, ['active', 'past_due', 'expired'], true) && !$expiresAt) {
@@ -170,7 +172,7 @@ try {
     $eventInsert = $pdo->prepare('INSERT INTO subscription_events (product_code, subscription_id, provider, source_event_id, provider_payment_reference, event_type, event_status, amount, currency, occurred_at, payload_sha256) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
     $eventInsert->execute([
         $productCode, $subscriptionId, $provider, $eventId, $paymentReference !== '' ? $paymentReference : null,
-        'subscription.snapshot', $eventStatus, $paymentReference !== '' ? number_format((float) $renewalAmount, 2, '.', '') : null,
+        'subscription.snapshot', $eventStatus, $paymentReference !== '' ? number_format((float) $paymentAmount, 2, '.', '') : null,
         $currency, $occurredAt, hash('sha256', $rawBody),
     ]);
     $pdo->commit();
