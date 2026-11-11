@@ -2,16 +2,18 @@ CREATE TABLE products (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   code VARCHAR(64) NOT NULL UNIQUE,
   name VARCHAR(160) NOT NULL,
+  product_claim VARCHAR(160) NOT NULL,
+  features_json TEXT NULL,
   license_model ENUM('perpetual','subscription') NOT NULL DEFAULT 'perpetual',
   status ENUM('active','inactive') NOT NULL DEFAULT 'active',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO products (code, name, license_model, status) VALUES
- ('oficina-pro-local', 'RMC Flow Oficina Pro — Edição Local', 'perpetual', 'active'),
- ('comercio-local', 'RMC Flow Comércio Local', 'perpetual', 'active'),
- ('oficina-pro-cloud', 'RMC Flow Oficina Pro Cloud', 'subscription', 'active');
+INSERT INTO products (code, name, product_claim, features_json, license_model, status) VALUES
+ ('oficina-pro-local', 'RMC Flow Oficina Pro — Edição Local', 'RMC Flow Oficina Pro', '{"vehicles":["car","motorcycle"],"offline":true}', 'perpetual', 'active'),
+ ('comercio-local', 'RMC Flow Comércio Local', 'RMC Flow Comércio Local', '{"offline":true}', 'perpetual', 'active'),
+ ('oficina-pro-cloud', 'RMC Flow Oficina Pro Cloud', 'RMC Flow Oficina Pro Cloud', NULL, 'subscription', 'active');
 
 CREATE TABLE licenses (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
