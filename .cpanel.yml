@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/rona7916/licencas.rmcsites.com.br/
+    - /bin/cp -f index.php $DEPLOYPATH
+    - /bin/cp -f subscriptions.php $DEPLOYPATH
+    - /bin/cp -f bootstrap.php $DEPLOYPATH
+    - /bin/cp -f .htaccess $DEPLOYPATH
+    - /bin/cp -R api assets $DEPLOYPATH
