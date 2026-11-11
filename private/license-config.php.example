@@ -8,4 +8,9 @@ return [
   'admin_password_hash' => 'COLE_AQUI_O_HASH_DA_SENHA',
   // Nunca coloque a chave privada dentro de public_html.
   'private_key_path' => '/home1/rona7916/private/rmc-flow-licenses/keys/license-private.pem',
+  // Segredos HMAC por produto para sincronização de assinaturas. Gere um valor aleatório forte
+  // e configure o mesmo segredo, fora do repositório, no sistema de origem.
+  'subscription_event_secrets' => [
+    // 'oficina-pro-cloud' => 'COLE_AQUI_UM_SEGREDO_ALEATORIO_DE_PELO_MENOS_32_BYTES',
+  ],
 ];
