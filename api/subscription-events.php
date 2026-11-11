@@ -132,15 +132,6 @@ try {
         $pdo->commit();
         apiResponse(200, ['received' => true, 'duplicate' => true]);
     }
-    if ($paymentReference !== '') {
-        $duplicatePayment = $pdo->prepare('SELECT id FROM subscription_events WHERE product_code=? AND provider=? AND provider_payment_reference=?');
-        $duplicatePayment->execute([$productCode, $provider, $paymentReference]);
-        if ($duplicatePayment->fetchColumn()) {
-            $pdo->commit();
-            apiResponse(200, ['received' => true, 'duplicate_payment' => true]);
-        }
-    }
-
     $find = $pdo->prepare('SELECT * FROM subscriptions WHERE product_code=? AND external_reference=? FOR UPDATE');
     $find->execute([$productCode, $externalReference]);
     $current = $find->fetch(PDO::FETCH_ASSOC);
