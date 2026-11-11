@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { requireCsrf();
         $parts=explode('|',trim($_POST['recovery_request']??''));
         if(count($parts)!==3||$parts[0]!=='RMCREC1'||!$parts[1]||!$parts[2]) throw new RuntimeException('Solicitação de recuperação inválida.');
         // A solicitação identifica a instalação; localize automaticamente a licença correta.
-        $row=db()->prepare('SELECT * FROM licenses WHERE request_code=? AND status="activated" AND product_code='oficina-pro-local''); $row->execute([$parts[1]]); $license=$row->fetch(PDO::FETCH_ASSOC);
+        $row=db()->prepare('SELECT * FROM licenses WHERE request_code=? AND status="activated" AND product_code=?'); $row->execute([$parts[1], 'oficina-pro-local']); $license=$row->fetch(PDO::FETCH_ASSOC);
         if(!$license) throw new RuntimeException('Nenhuma licença ativada corresponde a esta solicitação.');
         $licenseId=(int)$license['id'];
         $expires=gmdate('c',time()+1200);
