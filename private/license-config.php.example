@@ -1,0 +1,11 @@
+<?php
+return [
+  'db_host' => 'localhost',
+  'db_name' => 'SEU_BANCO',
+  'db_user' => 'SEU_USUARIO',
+  'db_pass' => 'SUA_SENHA',
+  // Gere com: php -r "echo password_hash('SUA_SENHA_FORTE', PASSWORD_DEFAULT), PHP_EOL;"
+  'admin_password_hash' => 'COLE_AQUI_O_HASH_DA_SENHA',
+  // Nunca coloque a chave privada dentro de public_html.
+  'private_key_path' => '/home1/rona7916/private/rmc-flow-licenses/keys/license-private.pem',
+];
