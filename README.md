@@ -78,7 +78,7 @@ Exemplo de corpo:
 }
 ```
 
-O identificador do evento e o identificador do pagamento são deduplicados. O painel armazena o hash do corpo para auditoria, sem guardar o payload bruto do webhook. Snapshots antigos não sobrescrevem estados mais recentes. O sistema de origem deve enviar um novo snapshot após cada confirmação, renovação ou cancelamento.
+O identificador do evento é deduplicado; a referência do pagamento pode aparecer em vários eventos, por exemplo quando o mesmo pagamento muda de pendente para aprovado. O painel armazena o hash do corpo para auditoria, sem guardar o payload bruto do webhook. Snapshots antigos não sobrescrevem estados mais recentes. O sistema de origem deve enviar um novo snapshot após cada confirmação, renovação ou cancelamento.
 
 ## Fluxo comercial legado da Oficina Pro Local
 
