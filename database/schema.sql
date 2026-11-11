@@ -26,7 +26,9 @@ CREATE TABLE licenses (
   activation_payload MEDIUMTEXT NULL,
   activated_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  KEY licenses_product_code_index (product_code),
+  CONSTRAINT licenses_product_fk FOREIGN KEY (product_code) REFERENCES products(code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE license_recovery_events (
