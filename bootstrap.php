@@ -28,9 +28,17 @@ function isLogged(): bool { return !empty($_SESSION['rmc_license_admin']); }
 function requireLogin(): void { if (!isLogged()) { header('Location: index.php'); exit; } }
 function code(): string { return 'RMC-'.strtoupper(bin2hex(random_bytes(3))).'-'.strtoupper(bin2hex(random_bytes(3))).'-'.strtoupper(bin2hex(random_bytes(3))); }
 function b64url(string $value): string { return rtrim(strtr(base64_encode($value), '+/', '-_'), '='); }
-function signLicense(array $payload): string {
+function signLicense(array $payload, ?string $productCode = null): string {
     global $config;
-    $private = @file_get_contents($config['private_key_path']);
+    $keyPath = $config['private_key_path'];
+    if ($productCode !== null && $productCode !== 'oficina-pro-local') {
+        $productKeys = $config['product_private_key_paths'] ?? [];
+        if (!is_array($productKeys) || empty($productKeys[$productCode])) {
+            throw new RuntimeException('A chave privada deste produto ainda não foi configurada.');
+        }
+        $keyPath = (string) $productKeys[$productCode];
+    }
+    $private = @file_get_contents($keyPath);
     if (!$private || !extension_loaded('openssl')) throw new RuntimeException('Chave privada RSA ou extensão OpenSSL indisponível.');
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if (!openssl_sign($json, $signature, $private, OPENSSL_ALGO_SHA256)) throw new RuntimeException('Não foi possível assinar a licença.');
