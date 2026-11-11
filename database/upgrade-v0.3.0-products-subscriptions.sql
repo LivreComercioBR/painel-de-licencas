@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS subscription_events (
   payload_sha256 CHAR(64) NOT NULL,
   received_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY subscription_events_source_unique (product_code, provider, source_event_id),
-  UNIQUE KEY subscription_events_payment_unique (product_code, provider, provider_payment_reference),
+  KEY subscription_events_payment_index (product_code, provider, provider_payment_reference),
   KEY subscription_events_subscription_index (subscription_id, received_at),
   CONSTRAINT subscription_events_product_fk FOREIGN KEY (product_code) REFERENCES products(code),
   CONSTRAINT subscription_events_subscription_fk FOREIGN KEY (subscription_id) REFERENCES subscriptions(id) ON DELETE SET NULL
