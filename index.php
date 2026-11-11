@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { requireCsrf();
 }
 $licenses = db()->query('SELECT l.*, p.name AS product_name FROM licenses l JOIN products p ON p.code=l.product_code ORDER BY l.id DESC')->fetchAll(PDO::FETCH_ASSOC); $selected = null;
 $perpetualProducts = db()->query("SELECT code, name FROM products WHERE license_model='perpetual' AND status='active' ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
-if (!empty($_GET['license'])) { $q = db()->prepare('SELECT * FROM licenses WHERE id=?'); $q->execute([(int)$_GET['license']]); $selected = $q->fetch(PDO::FETCH_ASSOC); }
+if (!empty($_GET['license'])) { $q = db()->prepare('SELECT l.*, p.name AS product_name FROM licenses l JOIN products p ON p.code=l.product_code WHERE l.id=?'); $q->execute([(int)$_GET['license']]); $selected = $q->fetch(PDO::FETCH_ASSOC); }
 $recoveryAuthorization=$_SESSION['recovery_authorization']??null; unset($_SESSION['recovery_authorization']);
 ?>
 <!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel de Licenças RMC</title><link rel="stylesheet" href="assets/app.css"><body><header><strong>RMC Sites — Central de Licenças</strong><nav><a href="subscriptions.php">Produtos e assinaturas</a><a href="?logout=1">Sair</a></nav></header><main><h1>Licenças da Edição Local</h1><?php if (isset($_GET['created'])) echo '<p class="success">Licença criada com sucesso.</p>'; ?>
