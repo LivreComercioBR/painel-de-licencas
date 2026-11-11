@@ -53,7 +53,7 @@ if (!preg_match('/^[a-z0-9][a-z0-9-]{1,63}$/', $productCode)
     || !preg_match('/^[0-9]{10}$/', $timestamp)
     || !preg_match('/^[A-Za-z0-9._:-]{8,120}$/', $eventId)
     || !preg_match('/^[a-f0-9]{64}$/i', $signature)
-    || $secret === '') {
+    || strlen($secret) < 32) {
     apiResponse(401, ['error' => 'unauthorized']);
 }
 if (abs(time() - (int) $timestamp) > 300) apiResponse(401, ['error' => 'stale_request']);
