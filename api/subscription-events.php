@@ -36,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') apiResponse(405, ['error' => 'method_
 $length = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
 if ($length > 65536) apiResponse(413, ['error' => 'payload_too_large']);
 
-$rawBody = file_get_contents('php://input');
+$rawBody = file_get_contents('php://input', false, null, 0, 65537);
 if (!is_string($rawBody) || $rawBody === '') apiResponse(400, ['error' => 'empty_body']);
+if (strlen($rawBody) > 65536) apiResponse(413, ['error' => 'payload_too_large']);
 $payload = json_decode($rawBody, true);
 if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) apiResponse(400, ['error' => 'invalid_json']);
 
