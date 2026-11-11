@@ -28,7 +28,7 @@ A tela `subscriptions.php`, acessível pelo menu do painel, permite cadastrar pr
 
 A instalação inicial cadastra a Oficina Pro Local, o Comércio Local e a Oficina Pro Cloud. Os planos Cloud são semeados com os valores existentes no código: Essencial (R$ 149,90 inicial; R$ 80,00 na renovação) e Profissional (R$ 179,90 inicial; R$ 80,00 na renovação), ciclo anual e tolerância de 30 dias.
 
-O formulário de emissão de licença e o formato assinado legado continuam voltados à Oficina Pro Local. A emissão para o Comércio Local e o controle de acesso dos produtos por assinatura exigem configurar e integrar os respectivos produtos; o cadastro do produto, por si só, não emite uma licença nem ativa uma assinatura.
+O formulário de vendas permite selecionar qualquer produto permanente ativo. A declaração `product_claim` e os recursos JSON do catálogo são incluídos no bloco assinado. A chave antiga em `private_key_path` continua exclusiva da Oficina Pro Local; configure uma chave privada separada em `product_private_key_paths` para cada outro produto que emite licenças. A chave pública correspondente precisa estar incorporada ao aplicativo daquele produto. Produtos por assinatura não recebem bloco permanente; seu status chega pela sincronização autenticada.
 
 ## Sincronização segura de assinaturas
 
@@ -87,7 +87,7 @@ O identificador do evento é deduplicado; a referência do pagamento pode aparec
 3. Abra a licença, informe o código de solicitação do computador e gere o bloco assinado.
 4. Envie o bloco ao cliente para ativação, inclusive em computador sem internet.
 
-A chave privada RSA fica somente na pasta privada. Não altere o produto declarado ou o formato da licença ao emitir ativações compatíveis com instalações existentes.
+A chave privada RSA fica somente na pasta privada. A chave global existente preserva as ativações legadas da Oficina Pro Local. Para cada outro produto permanente, gere um par RSA próprio em ambiente seguro, configure o caminho privado no arquivo privado e inclua somente a chave pública correspondente no aplicativo. Não altere o produto declarado nem o formato das licenças já emitidas.
 
 ## Segurança e limites desta versão
 
