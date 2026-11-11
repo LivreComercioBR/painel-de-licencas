@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require __DIR__.'/bootstrap.php';
+if (isset($_GET['logout'])) { session_destroy(); header('Location: index.php'); exit; }
 requireLogin();
 
 $error = null;
