@@ -17,7 +17,8 @@ INSERT IGNORE INTO products (code, name, license_model, status) VALUES
 
 ALTER TABLE licenses
   ADD COLUMN product_code VARCHAR(64) NOT NULL DEFAULT 'oficina-pro-local' AFTER license_code,
-  ADD INDEX licenses_product_code_index (product_code);
+  ADD INDEX licenses_product_code_index (product_code),
+  ADD CONSTRAINT licenses_product_fk FOREIGN KEY (product_code) REFERENCES products(code);
 
 CREATE TABLE IF NOT EXISTS subscription_plans (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
