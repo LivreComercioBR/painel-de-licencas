@@ -20,11 +20,11 @@ A sincronização de Git e a publicação são ações distintas. Um commit no G
 
 ## Banco e configuração privada
 
-- A atualização do banco existente deve ser feita uma única vez pelo script `database/upgrade-v0.3.0-products-subscriptions.sql`, antes da publicação dos novos arquivos.
+- Em instalações existentes, execute cada script de atualização do banco uma única vez e na ordem indicada: primeiro `database/upgrade-v0.3.0-products-subscriptions.sql`, depois `database/upgrade-v0.3.1-product-scoped-request-codes.sql`.
 - Preserve o arquivo `/home1/rona7916/private/rmc-flow-licenses/license-config.php` e todas as chaves privadas que já existem nessa pasta.
 - Nunca copie a pasta `private/` do repositório de exemplo para o document root.
 - As chaves de assinatura por produto e os segredos HMAC devem ser configurados depois, apenas nos arquivos privados correspondentes.
 
 ## Depois da publicação
 
-Acesse `https://licencas.rmcsites.com.br/`, entre no painel e confira o menu e a tela de produtos/assinaturas. Se aparecer erro, não rode a migration novamente; registre a mensagem e verifique os logs do PHP antes de qualquer segunda implantação.
+Acesse `https://licencas.rmcsites.com.br/`, entre no painel e confira o menu e a tela de produtos/assinaturas. Se aparecer erro, não rode uma migration novamente; registre a mensagem e verifique os logs do PHP antes de qualquer segunda implantação.
