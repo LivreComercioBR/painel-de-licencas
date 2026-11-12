@@ -24,11 +24,12 @@ CREATE TABLE licenses (
   customer_document VARCHAR(32) NULL,
   plan VARCHAR(40) NOT NULL DEFAULT 'local_perpetual',
   status ENUM('available','activated','blocked') NOT NULL DEFAULT 'available',
-  request_code VARCHAR(80) NULL UNIQUE,
+  request_code VARCHAR(80) NULL,
   activation_payload MEDIUMTEXT NULL,
   activated_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY licenses_product_request_code_unique (product_code, request_code),
   KEY licenses_product_code_index (product_code),
   CONSTRAINT licenses_product_fk FOREIGN KEY (product_code) REFERENCES products(code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
